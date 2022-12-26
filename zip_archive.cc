@@ -628,7 +628,11 @@ int32_t OpenArchiveFdRange(int fd, const char* debug_file_name, ZipArchiveHandle
 }
 
 int32_t OpenArchive(const char* fileName, ZipArchiveHandle* handle) {
+#ifndef ZIPARCHIVE_DISABLE_UTF8
   const int fd = ::android::base::utf8::open(fileName, O_RDONLY | O_BINARY | O_CLOEXEC, 0);
+#else
+  const int fd = ::open(fileName, O_RDONLY | O_BINARY | O_CLOEXEC, 0);
+#endif
   ZipArchive* archive = new ZipArchive(MappedZipFile(fd), true);
   *handle = archive;
 

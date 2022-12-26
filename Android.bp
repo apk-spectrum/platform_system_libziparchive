@@ -160,6 +160,16 @@ cc_library {
 }
 
 cc_library_static {
+    name: "libziparchive_for_aapt",
+    defaults: ["libziparchive_lib_defaults"],
+    target: {
+        windows: {
+            cflags: ["-DZIPARCHIVE_DISABLE_UTF8=1"],
+        },
+    },
+}
+
+cc_library_static {
     name: "libziparchive_for_incfs",
     defaults: ["libziparchive_lib_defaults", "incfs_support_defaults"],
     srcs: [
